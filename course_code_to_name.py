@@ -1,5 +1,6 @@
 from googlesearch import search
 import urllib.request
+from bs4 import BeautifulSoup
 
 
 def searcher(course_code, university):
@@ -9,14 +10,23 @@ def searcher(course_code, university):
     return output
 
 
-def url_to_title(url_in):
+def url_to_html(url_in):
     wp = urllib.request.urlopen(url_in)
     pw = wp.read()
     return pw
 
 
-search_result = searcher('EECS 370', 'University of Michigan')
-print(search_result)
+def html_to_title(html_in):
+    soup = BeautifulSoup(html_in, 'html.parser')
+    return soup.title.string
 
-html = url_to_title('https://web.eecs.umich.edu/~profmars/index.html%3Fp=26.html')
-print(html)
+
+url_list = searcher('EECS 370', 'University of Michigan')
+for url in url_list:
+    try:
+        html = url_to_html(url)
+        title = html_to_title(html)
+        print(title)
+    except:
+        print("didnt work for url: ", url)
+
