@@ -8,7 +8,6 @@ import re
 class Part2:
     def __init__(self, num_searches=10):
         self.SEARCH_COUNT = num_searches
-        self.no_result_count = 0
 
     # public interface
     def url_to_title_list(self, course_code, university):
@@ -33,15 +32,15 @@ class Part2:
                 print(title)
             except urllib.error.HTTPError:
                 print("url_to_html didnt work for url: ", url)
-                self.no_result_count += 1
             except AttributeError:
                 print("html_to_title didnt work for url: ", url)
-                self.no_result_count += 1
+            except:
+                print("Unknown error occurred")
 
-        if self.no_result_count == self.SEARCH_COUNT:
+        if len(title_list) == 0:
             print("\nSearch didn't work\n")
         else:
-            print("\nSearch worked\n")
+            print("\nSearch worked,", len(title_list), "titles found\n")
         return title_list
 
     # helper functions
@@ -69,6 +68,5 @@ class Part2:
 test_one = Part2()
 title_list_one = test_one.url_to_title_list('EECS 370', 'University of Michigan')
 # print(title_list_one)
-
 test_two = Part2()
 title_list_two = test_two.url_to_title_list('EECS 281', 'University of Michigan')
