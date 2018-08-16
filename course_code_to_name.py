@@ -65,7 +65,7 @@ class Part2:
         soup = BeautifulSoup(html_in, 'html.parser')
         return soup.title.string
 
-
+# test cases
 test_one = Part2()
 title_list_one = test_one.url_to_title_list('EECS 370', 'University of Michigan')
 # print(title_list_one)
